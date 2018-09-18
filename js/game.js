@@ -1,5 +1,5 @@
 class Game {
-    constructor(pharses, missed)
+    constructor(phrases, missed)
     {
         this.phrases = phrases;
         this.missed = missed;
