@@ -7,7 +7,11 @@ class Game {
 
     getRandomPhrase() {}
 
-    handleInteraction() {}
+    handleInteraction() {
+        $( ".key" ).on( "click", function() {
+            alert( $( this ).text() );
+          });
+    }
 
     removeLife() {}
 

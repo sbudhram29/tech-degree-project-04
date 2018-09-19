@@ -8,14 +8,28 @@ class Phrase {
      * add Phrase to DOM
      * params {string} phrase
      */
-    addPhraseToDisplay() {}
+    addPhraseToDisplay() {
+        var letter = $("<li class='hide letter h'></li>").text("h"); 
+        $('#phrase ul').append(letter);
+    }
 
     /**
      * check if letter in pharse
      * params {string} letter
      */
-    checkLetter() {}
+    checkLetter(letter) {
+        console.log(this.phrase);
+        // if(letter in this.phrase){
+        //     this.showMatchedLetter(letter)
+        //     return true;
+        // }else{
+        //     return false;
+        // }
+    }
 
-    showMatchedLetter() {}
+    showMatchedLetter() {
+        $(`.letter.${letter}`).removeClass('hide');
+        $(`.letter.${letter}`).addClass('show');
+    }
 
 }
