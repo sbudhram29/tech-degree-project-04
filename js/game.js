@@ -5,7 +5,9 @@ class Game {
         this.missed = missed;
     }
 
-    getRandomPhrase() {}
+    getRandomPhrase() {
+
+    }
 
     handleInteraction() {
         $( ".key" ).on( "click", function() {
@@ -13,11 +15,19 @@ class Game {
           });
     }
 
-    removeLife() {}
+    removeLife() {
+        console.log('wronngnng!!1');
+    }
 
-    checkForWin() {}
+    checkForWin() {
 
-    gameOver() {}
+    }
 
-    startGame() {}
+    gameOver() {
+
+    }
+
+    startGame() {
+    
+    }
 }

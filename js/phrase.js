@@ -9,8 +9,14 @@ class Phrase {
      * params {string} phrase
      */
     addPhraseToDisplay() {
-        var letter = $("<li class='hide letter h'></li>").text("h"); 
-        $('#phrase ul').append(letter);
+       let letters = this.phrase.split('')
+       letters.forEach((letter) => {
+            let letterLi = 
+                $(`<li class='hide ${(letter !== ' ') ? 'letter ' + letter : 'space'}'></li>`)
+                    .text((letter !== ' ') ? letter : ''); 
+            $('#phrase ul').append(letterLi);
+        }
+        );
     }
 
     /**
@@ -18,16 +24,10 @@ class Phrase {
      * params {string} letter
      */
     checkLetter(letter) {
-        console.log(this.phrase);
-        // if(letter in this.phrase){
-        //     this.showMatchedLetter(letter)
-        //     return true;
-        // }else{
-        //     return false;
-        // }
+        this.showMatchedLetter(letter);
     }
 
-    showMatchedLetter() {
+    showMatchedLetter(letter) {
         $(`.letter.${letter}`).removeClass('hide');
         $(`.letter.${letter}`).addClass('show');
     }
