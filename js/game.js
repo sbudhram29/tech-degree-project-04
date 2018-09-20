@@ -20,11 +20,11 @@ class Game {
             this
                 .validLetter
                 .push(letter);
-            $(`button .key:contains("${letter}")`).addClass('chosen');
+            $(`button.key:contains("${letter}")`).addClass('chosen');
             this.checkForWin(phrase);
         } else {
             this.removeLife(phrase);
-            $(`button .key:contains("${letter}")`).addClass('wrong');
+            $(`button.key:contains("${letter}")`).addClass('wrong');
         }
 
     }
@@ -33,7 +33,6 @@ class Game {
         /*
         * changed image to lostLife on missed letter
         */
-
         //this.missed starts are 5 to remove from last heart first
         $(`.tries:nth-child(${this.missed})`).replaceWith(`<li class="tries"><img src="images/lostHeart.png" height="35px" widght="30px"></li>`);
         this.missed--;
@@ -56,8 +55,6 @@ class Game {
         let letters = Array.from(letterInPhrase);
 
         for (let i = 0; i < letters.length; i++) {
-            console.log(this.letters)
-            console.log(letters)
             if (!this.validLetter.includes(letters[i])) {
                 return false;
             }
@@ -83,8 +80,16 @@ class Game {
     startGame() {
         //reset hearts
         this.missed = 5;
+        //reset vaild letters
+        this.validLetter = [];
+        //refill hearts
         this.refillLife();
+        //remove phrase
         $("#phrase ul").text("");
+        //remove all key markings
+        $('.keyrow')
+            .children()
+            .removeClass('chosen wrong');
 
         return new Phrase(game.getRandomPhrase());
     }
