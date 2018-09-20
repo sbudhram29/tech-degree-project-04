@@ -26,7 +26,6 @@ class Game {
             this.removeLife(phrase);
             $(`button.key:contains("${letter}")`).addClass('wrong');
         }
-
     }
 
     removeLife(phrase) {
@@ -48,6 +47,7 @@ class Game {
             $(`.tries:nth-child(${i})`).replaceWith(`<li class="tries"><img src="images/liveHeart.png" height="35px" widght="30px"></li>`);
         }
     }
+
     checkForWin(phrase) {
         let letterInPhrase = new Set(phrase.phrase.split(""));
         //delet all spaces
@@ -68,9 +68,16 @@ class Game {
 
         let msg;
 
-        msg = "Correct the phrase was \"" + phrase.phrase + "\"";
-        if (winner) {} else {
+        if (winner) {
+            msg = "Correct the phrase was \"" + phrase.phrase + "\"";
+
+            $(".title").text("Winner!");
+            $('#overlay').addClass('win');
+        } else {
             msg = "Sorry the phrase was \"" + phrase.phrase + "\"";
+
+            $(".title").text("Maybe next time");
+            $('#overlay').addClass('lose');
         }
 
         $("#game-over-message").text(msg);
@@ -84,6 +91,8 @@ class Game {
         this.validLetter = [];
         //refill hearts
         this.refillLife();
+        //remove win lose overlay
+        $("#overlay").removeClass("win loss");
         //remove phrase
         $("#phrase ul").text("");
         //remove all key markings

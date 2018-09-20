@@ -10,6 +10,7 @@ const phrases = [
 
 const game = new Game(phrases, 5);
 let phrase = null;
+let gameStarted = false;
 let keyboardKeys = [];
 /*
 eventlistener for start game needed
@@ -20,6 +21,7 @@ $('#btn__reset').on('click', () => resetDisplay());
 function resetDisplay() {
     keyboardKeys = [];
     $('#overlay').hide();
+    gameStarted = true;
     phrase = game.startGame();
     phrase.addPhraseToDisplay();
 };
@@ -39,7 +41,7 @@ $(".key").on("click", function () {
 $("body").keydown(function (e) {
     let charNum = e.which;
     let letter = String.fromCharCode(charNum);
-    if (charNum >= 65 && charNum <= 90) {
+    if (charNum >= 65 && charNum <= 90 && gameStarted) {
         if (!keyboardKeys.includes(letter.toLowerCase())) {
             keyboardKeys.push(letter.toLowerCase());
             markButton(letter.toLowerCase());
