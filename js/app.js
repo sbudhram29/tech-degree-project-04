@@ -22,20 +22,23 @@ function resetDisplay() {
     keyboardKeys = [];
     $('#overlay').hide();
     gameStarted = true;
-    phrase = game.startGame();
-    phrase.addPhraseToDisplay();
+    game.startGame();
 };
 
 const markButton = (letter) => {
-    game.handleInteraction(phrase, letter);
+    game.letter = letter;
+    game.handleInteraction();
     $(`button.key:contains("${letter}")`).attr("disabled", "disabled");
 };
 // eventlistener for keyboard button so that clicking a button calls the
 // markbutton()
 
-$(".key").on("click", function () {
+$("button.key").on("click", function () {
     let letter = $(this).text();
-    markButton(letter);
+    console.log(letter.charCodeAt(0));
+    if (letter.charCodeAt(0) >= 97 && letter.charCodeAt(0) <= 122) {
+        markButton(letter);
+    }
 });
 
 $("body").keydown(function (e) {
