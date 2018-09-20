@@ -35,7 +35,7 @@ class Game {
         */
 
         //this.missed starts are 5 to remove from last heart first
-        $(`.tries:nth-child(${this.missed})`).replaceWith(`<img src="images/lostHeart.png" height="35px" widght="30px">`);
+        $(`.tries:nth-child(${this.missed})`).replaceWith(`<li class="tries"><img src="images/lostHeart.png" height="35px" widght="30px"></li>`);
         this.missed--;
 
         //if 0 hearts left game over
@@ -44,6 +44,11 @@ class Game {
         }
     }
 
+    refillLife() {
+        for (let i = 1; i <= this.missed; i++) {
+            $(`.tries:nth-child(${i})`).replaceWith(`<li class="tries"><img src="images/liveHeart.png" height="35px" widght="30px"></li>`);
+        }
+    }
     checkForWin(phrase) {
         let letterInPhrase = new Set(phrase.phrase.split(""));
         //delet all spaces
@@ -76,6 +81,11 @@ class Game {
     }
 
     startGame() {
+        //reset hearts
+        this.missed = 5;
+        this.refillLife();
+        $("#phrase ul").text("");
+
         return new Phrase(game.getRandomPhrase());
     }
 }
