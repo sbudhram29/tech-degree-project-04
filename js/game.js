@@ -3,36 +3,79 @@ class Game {
     {
         this.phrases = phrases;
         this.missed = missed;
+        //keep track of valid letters
+        this.validLetter = [];
     }
 
-    getRandomPhrase() {}
-
-    handleInteraction() {
-        $(".key")
-            .on("click", function () {
-                alert($(this).text());
-            });
+    getRandomPhrase() {
+        const randomNumber = Math.floor(Math.random() * this.phrases.length);
+        return this.phrases[randomNumber];
     }
 
-    removeLife() {
-        console.log('wronngnng!!1');
-    }
-
-    checkForWin() {
+    handleInteraction(phrase, letter) {
         /*
-        //check and see if all letter in phrase is
-        //selected
-        // and ! all life finished
+        * Check to see if letter selected is in phrase
+        */
+        if (phrase.checkLetter(letter)) {
+            this
+                .validLetter
+                .push(letter);
+            $(`button .key:contains("${letter}")`).addClass('chosen');
+            this.checkForWin(phrase);
+        } else {
+            this.removeLife(phrase);
+            $(`button .key:contains("${letter}")`).addClass('wrong');
+        }
+
+    }
+
+    removeLife(phrase) {
+        /*
+        * changed image to lostLife on missed letter
         */
 
+        //this.missed starts are 5 to remove from last heart first
+        $(`.tries:nth-child(${this.missed})`).replaceWith(`<img src="images/lostHeart.png" height="35px" widght="30px">`);
+        this.missed--;
+
+        //if 0 hearts left game over
+        if (this.missed < 1) {
+            this.gameOver(phrase);
+        }
     }
 
-    gameOver() {
-        //if win or no life remains
+    checkForWin(phrase) {
+        let letterInPhrase = new Set(phrase.phrase.split(""));
+        //delet all spaces
+        letterInPhrase.delete(" ");
+        let letters = Array.from(letterInPhrase);
 
+        for (let i = 0; i < letters.length; i++) {
+            console.log(this.letters)
+            console.log(letters)
+            if (!this.validLetter.includes(letters[i])) {
+                return false;
+            }
+        }
+
+        //if all the letters in phrase are in valid letter player wins
+        this.gameOver(phrase, true);
+    }
+
+    gameOver(phrase, winner = false) {
+
+        let msg;
+
+        msg = "Correct the phrase was \"" + phrase.phrase + "\"";
+        if (winner) {} else {
+            msg = "Sorry the phrase was \"" + phrase.phrase + "\"";
+        }
+
+        $("#game-over-message").text(msg);
+        $('#overlay').show();
     }
 
     startGame() {
-        //get random phrase reset board
+        return new Phrase(game.getRandomPhrase());
     }
 }

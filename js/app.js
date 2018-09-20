@@ -4,13 +4,12 @@ const phrases = [
     "chicken dinner",
     "go for gold",
     "keep trying",
-    "practice makes perfect"
+    "practice makes perfect",
+    "treehouse"
 ];
 
-const randomNumber = Math.floor(Math.random() * phrases.length);
-
-const phrase = new Phrase(phrases[randomNumber]);
-const game = new Game(phrase);
+const game = new Game(phrases, 5);
+let phrase = null;
 /*
 eventlistener for start game needed
 */
@@ -19,24 +18,26 @@ $('#btn__reset').on('click', () => resetDisplay());
 
 function resetDisplay() {
     $('#overlay').hide();
+    phrase = game.startGame();
     phrase.addPhraseToDisplay();
 };
 
 const markButton = (letter) => {
-    if(phrase.phrase.indexOf(letter.text()) !== -1){
-        letter.addClass('chosen');
-    } else {
-        game.removeLife();
-        letter.addClass('wrong');
-    }
-        letter.attr("disabled", "disabled");
-  };
-// evernt listener for keyboard button so that clicking a button calls the
+    game.handleInteraction(phrase, letter);
+    $(`button .key:contains("${letter}")`).attr("disabled", "disabled");
+};
+// eventlistener for keyboard button so that clicking a button calls the
 // markbutton()
 
-$( ".key" ).on( "click",function() {
+$(".key").on("click", function () {
     let letter = $(this).text();
-    markButton($(this));
-    phrase.checkLetter(letter);
+    markButton(letter);
 });
- 
+
+$("body").keydown(function (e) {
+    let charNum = e.which;
+    let letter = String.fromCharCode(charNum);
+    if (charNum >= 65 && charNum <= 90) {
+        markButton(letter.toLowerCase());
+    }
+});
