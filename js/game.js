@@ -5,14 +5,13 @@ class Game {
         this.missed = missed;
     }
 
-    getRandomPhrase() {
-
-    }
+    getRandomPhrase() {}
 
     handleInteraction() {
-        $( ".key" ).on( "click", function() {
-            alert( $( this ).text() );
-          });
+        $(".key")
+            .on("click", function () {
+                alert($(this).text());
+            });
     }
 
     removeLife() {
@@ -20,14 +19,20 @@ class Game {
     }
 
     checkForWin() {
+        /*
+        //check and see if all letter in phrase is
+        //selected
+        // and ! all life finished
+        */
 
     }
 
     gameOver() {
+        //if win or no life remains
 
     }
 
     startGame() {
-    
+        //get random phrase reset board
     }
 }
